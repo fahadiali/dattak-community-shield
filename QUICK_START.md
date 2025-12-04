@@ -22,7 +22,7 @@ Attendez que toutes les dépendances soient installées.
 cd /Users/admin/Documents/Epitech/DATTAK
 ./start_central.sh
 ```
-✅ Attendez: "Uvicorn running on http://0.0.0.0:5000"
+✅ Attendez: "Uvicorn running on http://0.0.0.0:5001"
 
 #### Terminal 2 - Site A
 ```bash

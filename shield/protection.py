@@ -9,6 +9,7 @@ import requests
 from typing import Dict, List, Set, Optional
 from datetime import datetime
 from fastapi import Request, HTTPException
+from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 
 
@@ -48,7 +49,7 @@ class DattakShield:
     Main shield class that provides protection against automated attacks
     """
     
-    def __init__(self, site_id: str, central_server_url: str = "http://localhost:5000"):
+    def __init__(self, site_id: str, central_server_url: str = "http://localhost:5001"):
         self.site_id = site_id
         self.central_server_url = central_server_url
         self.local_blacklist: Set[str] = set()
@@ -233,9 +234,11 @@ class ShieldMiddleware(BaseHTTPMiddleware):
         is_blocked, source = self.shield.is_blocked(client_ip)
         if is_blocked:
             print(f"[SHIELD {self.shield.site_id}] Blocked request from {client_ip} (source: {source})")
-            return HTTPException(
+            return JSONResponse(
                 status_code=403,
-                detail=f"Access denied. IP blocked by Dattak Community Shield ({source} protection)."
+                content={
+                    "detail": f"Access denied. IP blocked by Dattak Community Shield ({source} protection)."
+                }
             )
         
         # Process the request
@@ -243,7 +246,7 @@ class ShieldMiddleware(BaseHTTPMiddleware):
         return response
 
 
-def create_shield(site_id: str, central_server_url: str = "http://localhost:5000") -> DattakShield:
+def create_shield(site_id: str, central_server_url: str = "http://localhost:5001") -> DattakShield:
     """
     Factory function to create a shield instance
     """

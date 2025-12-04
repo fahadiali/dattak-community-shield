@@ -19,7 +19,7 @@ templates = Jinja2Templates(directory="templates")
 
 # Initialize Dattak Shield
 SITE_ID = "Site_A"
-CENTRAL_SERVER = "http://localhost:5000"
+CENTRAL_SERVER = "http://localhost:5001"
 shield = create_shield(SITE_ID, CENTRAL_SERVER)
 
 # Add shield middleware

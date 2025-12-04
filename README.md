@@ -20,7 +20,7 @@ Dattak Community Shield est un système de protection collaborative pour les PME
 
 Le système comprend 4 composants :
 
-1. **Serveur Central Dattak** (port 5000) - Hub d'intelligence des menaces
+1. **Serveur Central Dattak** (port 5001) - Hub d'intelligence des menaces
 2. **Site A** (port 8001) - Cabinet d'Avocats Dupont (demo)
 3. **Site B** (port 8002) - Expertise Comptable Martin (demo)
 4. **Bot d'Attaque** - Simulateur d'attaques automatisées
@@ -74,7 +74,7 @@ cd ..
 cd central_server
 python app.py
 ```
-Serveur disponible sur : http://localhost:5000
+Serveur disponible sur : http://localhost:5001
 
 ### Terminal 2 - Site A (Cabinet d'Avocats)
 ```bash
@@ -182,7 +182,7 @@ python bot.py http://localhost:8002
 
 ## 📊 Endpoints API
 
-### Serveur Central (port 5000)
+### Serveur Central (port 5001)
 
 - `GET /` - Status du serveur
 - `POST /api/threats/report` - Recevoir un signalement de menace
@@ -235,7 +235,7 @@ curl -X POST http://localhost:8001/contact \
 ### Changer le serveur central
 Dans `site_a/app.py` et `site_b/app.py` :
 ```python
-CENTRAL_SERVER = "http://votre-serveur-dattak.com:5000"
+CENTRAL_SERVER = "http://votre-serveur-dattak.com:5001"
 ```
 
 ### Ajouter des patterns de détection
@@ -250,7 +250,7 @@ SQL_PATTERNS = [
 ## 🔧 Dépannage
 
 ### Erreur "Could not sync with central server"
-- Vérifier que le serveur central est démarré sur le port 5000
+- Vérifier que le serveur central est démarré sur le port 5001
 - Vérifier que `CENTRAL_SERVER` pointe vers la bonne URL
 
 ### Les attaques ne sont pas bloquées

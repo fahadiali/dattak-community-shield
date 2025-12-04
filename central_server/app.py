@@ -129,6 +129,6 @@ async def clear_blacklist():
 
 if __name__ == "__main__":
     import uvicorn
-    print("Starting Dattak Central Threat Intelligence Server on port 5000...")
-    uvicorn.run(app, host="0.0.0.0", port=5000)
+    print("Starting Dattak Central Threat Intelligence Server on port 5001...")
+    uvicorn.run(app, host="0.0.0.0", port=5001)
 

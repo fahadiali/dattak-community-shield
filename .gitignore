@@ -42,6 +42,3 @@ central_server/threats.json
 *.log
 *.pid
 
-# Keep threats.json structure but ignore content
-!central_server/threats.json.example
-

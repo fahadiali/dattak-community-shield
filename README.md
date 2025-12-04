@@ -29,9 +29,17 @@ cd site_a && python3 app.py
 cd site_b && python3 app.py
 ```
 
-**Terminal 4 - Attaque:**
+**Terminal 4 - Tests:**
 ```bash
+# Tous les scénarios
 cd attacker && python3 bot.py http://localhost:8001
+
+# Scénario spécifique
+python3 bot.py http://localhost:8001 honeypot
+python3 bot.py http://localhost:8001 sql1
+python3 bot.py http://localhost:8001 sql2
+python3 bot.py http://localhost:8001 xss1
+python3 bot.py http://localhost:8001 xss2
 ```
 
 ## URLs

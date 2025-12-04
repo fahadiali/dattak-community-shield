@@ -45,7 +45,7 @@ async def submit_contact(
     website: str = Form("")    # Another honeypot field
 ):
     """Handle contact form submission with protection"""
-    client_ip = request.client.host
+    client_ip = request.client.host if request.client else "unknown"
     
     # Prepare form data for analysis
     form_data = {
@@ -60,8 +60,9 @@ async def submit_contact(
     is_threat, reason = shield.analyze_request(form_data)
     
     if is_threat:
-        # Block this IP
-        shield.block_ip(client_ip, reason)
+        # Block this IP (if known)
+        if client_ip != "unknown":
+            shield.block_ip(client_ip, reason)
         print(f"[SITE B] Attack blocked from {client_ip}: {reason}")
         raise HTTPException(
             status_code=403,

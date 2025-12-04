@@ -227,19 +227,20 @@ class ShieldMiddleware(BaseHTTPMiddleware):
         self.shield = shield
     
     async def dispatch(self, request: Request, call_next):
-        # Get client IP
-        client_ip = request.client.host
+        # Get client IP (handle case where it might be None)
+        client_ip = request.client.host if request.client else "unknown"
         
-        # Check if IP is blocked
-        is_blocked, source = self.shield.is_blocked(client_ip)
-        if is_blocked:
-            print(f"[SHIELD {self.shield.site_id}] Blocked request from {client_ip} (source: {source})")
-            return JSONResponse(
-                status_code=403,
-                content={
-                    "detail": f"Access denied. IP blocked by Dattak Community Shield ({source} protection)."
-                }
-            )
+        # Check if IP is blocked (skip check for unknown IPs)
+        if client_ip != "unknown":
+            is_blocked, source = self.shield.is_blocked(client_ip)
+            if is_blocked:
+                print(f"[SHIELD {self.shield.site_id}] Blocked request from {client_ip} (source: {source})")
+                return JSONResponse(
+                    status_code=403,
+                    content={
+                        "detail": f"Access denied. IP blocked by Dattak Community Shield ({source} protection)."
+                    }
+                )
         
         # Process the request
         response = await call_next(request)
